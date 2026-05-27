@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,36 +6,39 @@
     <title>Phoenix Core - Official Headquarters</title>
     <style>
         /* ==========================================================================
-           GLOBAL VARIABLES & RESET
+           GLOBAL VARIABLES & PREMIUM REALISTIC TYPOGRAPHY
            ========================================================================== */
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@400;700;800;900&display=swap');
 
         :root {
-            --bg-color: #0b0c10;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --card-border: rgba(255, 255, 255, 0.08);
-            --text-main: #ffffff;
-            --text-muted: #a0a5b5;
-            --accent-primary: #00f0ff;
-            --accent-secondary: #ff0055;
-            --accent-glow: rgba(0, 240, 255, 0.4);
+            --bg-color: #050714; 
+            --card-bg: rgba(12, 18, 40, 0.5);
+            --card-border: rgba(59, 130, 246, 0.15);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-primary: #3b82f6; 
+            --accent-secondary: #ec4899; 
+            --accent-cyan: #00f0ff;
             
-            --gradient-text: linear-gradient(90deg, #00f0ff, #ff0055);
-            --gradient-card: linear-gradient(145deg, rgba(0,240,255,0.05) 0%, rgba(255,0,85,0.05) 100%);
+            --accent-glow-blue: rgba(59, 130, 246, 0.4);
+            --accent-glow-pink: rgba(236, 72, 153, 0.4);
+            
+            --gradient-text: linear-gradient(135deg, #00f0ff, #ec4899, #3b82f6);
+            --gradient-card: linear-gradient(160deg, rgba(59, 130, 246, 0.05) 0%, rgba(236, 72, 153, 0.05) 100%);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Outfit', sans-serif;
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
+            font-family: 'Inter', sans-serif; 
             overflow-x: hidden;
-            line-height: 1.6;
+            line-height: 1.8;
             position: relative;
         }
 
@@ -45,46 +47,61 @@
             color: inherit;
         }
 
+        h1, h2, h3, h4, .premium-title {
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: -0.5px;
+        }
+
         /* ==========================================================================
-           BACKGROUND CANVAS (GLASSY BUBBLES ANIMATION)
+           BACKGROUND CANVAS 
            ========================================================================== */
         #bubble-canvas {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
             z-index: -1;
             pointer-events: none;
+            opacity: 0.9;
         }
 
         /* ==========================================================================
-           TYPOGRAPHY & UTILITIES
+           UTILITIES & CONTAINERS
            ========================================================================== */
         .gradient-text {
             background: var(--gradient-text);
+            background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             display: inline-block;
+            text-shadow: 0px 4px 30px rgba(236, 72, 153, 0.2);
+            animation: gradient-flow 6s ease infinite;
+        }
+
+        @keyframes gradient-flow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .section-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 100px 20px;
+            padding: 100px 25px;
+            position: relative;
+            z-index: 2;
         }
 
-        /* GLASSMORPHISM CARD STYLE */
         .glass-card {
             background: var(--card-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
             border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 40px;
-            transition: all 0.4s ease;
+            border-radius: 20px; 
+            padding: 50px;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.05);
         }
 
         .glass-card::before {
@@ -93,15 +110,15 @@
             top: 0; left: 0;
             width: 100%; height: 100%;
             background: var(--gradient-card);
-            z-index: -1;
             opacity: 0;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.5s ease;
+            z-index: -1;
         }
 
         .glass-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(0, 240, 255, 0.3);
-            box-shadow: 0 10px 30px var(--accent-glow);
+            transform: translateY(-8px);
+            border-color: rgba(236, 72, 153, 0.3);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(236, 72, 153, 0.15);
         }
 
         .glass-card:hover::before {
@@ -109,95 +126,169 @@
         }
 
         /* ==========================================================================
-           HERO SECTION (PHOTOS & INTRO)
+           HERO SECTION 
            ========================================================================== */
         .hero-section {
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 40px;
+            padding-top: 120px;
         }
 
-        /* Big Phoenix Circle */
-        .phoenix-logo {
-            width: 250px;
-            height: 250px;
-            border-radius: 50%;
-            border: 3px solid var(--accent-primary);
-            box-shadow: 0 0 40px var(--accent-glow);
-            background-image: url('https://cdn.discordapp.com/attachments/1503839471614034061/1505125551990505522/photo-to-anime-68fe5a1f6cfdf09a81be5d54.png?ex=6a097ce7&is=6a082b67&hm=e994b96a5a9924aa88b4d8960042cce62e0e57b8c546dfd6d32fa43f5e3c1095&');
-            background-size: cover;
-            background-position: center;
-            animation: pulse-glow 3s infinite alternate;
+        .main-hero-title {
+            font-size: 4.5rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        @keyframes pulse-glow {
-            0% { box-shadow: 0 0 20px rgba(0, 240, 255, 0.2); }
-            100% { box-shadow: 0 0 50px rgba(0, 240, 255, 0.6); }
+        .dev-team-subtitle {
+            font-size: 1.5rem;
+            color: var(--accent-cyan);
+            font-weight: 600;
+            margin-bottom: 60px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
         }
 
-        /* 3 Small Circles for Team */
         .team-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
+            gap: 60px;
             width: 100%;
-            max-width: 900px;
-            margin-top: 20px;
+            max-width: 1000px;
+            margin-bottom: 80px;
         }
 
         .team-member {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px;
+            gap: 20px;
         }
 
         .team-circle {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            border: 2px solid var(--accent-secondary);
+            width: 160px;
+            height: 160px;
+            border-radius: 50%; 
+            border: 3px solid rgba(255, 255, 255, 0.1);
             background-size: cover;
-            background-position: center;
-            transition: transform 0.3s ease;
+            /* Adjust kiya taaki faces center aur thoda upar dikhein */
+            background-position: center 15%; 
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+            background-color: #0c1228; /* Fallback color jab tak image load na ho */
+        }
+
+        .team-circle::after {
+            content: '';
+            position: absolute;
+            top: -5px; left: -5px; right: -5px; bottom: -5px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-secondary));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
         }
 
         .team-circle:hover {
-            transform: scale(1.05);
+            transform: translateY(-10px) scale(1.05);
+            border-color: transparent;
         }
 
-        /* Replace these with actual image links */
-        .team1 { background-image: url('https://cdn.discordapp.com/attachments/1503839471614034061/1505128736801034355/1d4fa84e4a815925429bcbc061354b0.jpg?ex=6a097fde&is=6a082e5e&hm=5edbbd7ce5dd24339b6deed7ec0c38225c6d03d93d38e94253da0637c9aab94b&'); }
-        .team2 { background-image: url('https://cdn.discordapp.com/attachments/1503839471614034061/1505127828746670100/photo-to-anime-68fe614b6cfdf09a81be6bab.png?ex=6a097f06&is=6a082d86&hm=8a31ba1b2d1064674299210c9dc2c8f2daee20dd08e3f134ca12d2a8c1735a52&'); }
-        .team3 { background-image: url('https://cdn.discordapp.com/attachments/1503839471614034061/1505127590472450120/Kneeling_Knight_in_Golden_Armor_Beneath_a_Sacred_Light.jpg?ex=6a097ecd&is=6a082d4d&hm=d4f5eedfc079cfc0bd505b116d3b4ca7a0d3c0d27bad0123e804e23282c64fa4&'); }
+        .team-circle:hover::after {
+            opacity: 1;
+            animation: spin-glow 3s linear infinite;
+        }
+
+        /* Yahan par permanent paths set kar diye hain images/ folder ke liye */
+        .team1 { background-image: url('images/lark.png'); }
+        .team2 { background-image: url('images/juliet.png'); }
+        .team3 { background-image: url('images/kaze.png'); }
 
         .team-name {
-            font-size: 1.2rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            /* Added visual cue for editable text */
-            border-bottom: 1px dashed rgba(255,255,255,0.3);
-            cursor: text;
-            outline: none;
-            padding: 2px 8px;
-            border-radius: 4px;
-            transition: background 0.3s;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px 25px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
         }
 
-        .team-name:focus {
-            background: rgba(255, 255, 255, 0.1);
-            border-bottom: 1px solid var(--accent-primary);
+        .phoenix-logo {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            border: 2px solid rgba(236, 72, 153, 0.5);
+            box-shadow: 0 0 80px rgba(236, 72, 153, 0.3), inset 0 0 40px rgba(0, 0, 0, 0.8);
+            margin-bottom: 30px;
+            animation: breathe 4s ease-in-out infinite;
+            object-fit: cover; 
+            background-color: #000;
+        }
+
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 50px rgba(236, 72, 153, 0.2); }
+            50% { transform: scale(1.03); box-shadow: 0 0 90px rgba(0, 240, 255, 0.4); border-color: rgba(0, 240, 255, 0.5); }
+        }
+
+        .hero-invite-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px 50px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            margin-bottom: 60px; 
+        }
+
+        .hero-invite-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        .hero-invite-btn:hover {
+            transform: translateY(-5px);
+            border-color: transparent;
+            box-shadow: 0 15px 40px var(--accent-glow-pink);
+        }
+
+        .hero-invite-btn:hover::before {
+            opacity: 1;
         }
 
         /* ==========================================================================
-           CORE INFRASTRUCTURE (COMMANDS)
+           CORE INFRASTRUCTURE
            ========================================================================== */
         .section-title {
-            font-size: 2.5rem;
+            font-size: 3rem;
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 70px;
             font-weight: 800;
         }
 
@@ -209,14 +300,21 @@
 
         .command-title {
             font-size: 1.8rem;
-            margin-bottom: 15px;
-            color: var(--accent-primary);
+            margin-bottom: 20px;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 700;
         }
 
         .command-desc {
             color: var(--text-muted);
             font-size: 1.1rem;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            line-height: 1.8;
+            border-left: 3px solid var(--accent-secondary);
+            padding-left: 20px;
         }
 
         .detailed-list {
@@ -224,50 +322,105 @@
         }
 
         .detailed-list li {
-            margin-bottom: 15px;
+            margin-bottom: 25px;
             position: relative;
-            padding-left: 25px;
-            color: #d1d5e0;
+            padding-left: 30px;
+            color: #cbd5e1;
+            font-size: 1.05rem;
+            line-height: 1.7;
         }
 
         .detailed-list li::before {
-            content: '▹';
+            content: '•';
             position: absolute;
             left: 0;
-            color: var(--accent-secondary);
-            font-weight: bold;
+            top: -5px;
+            color: var(--accent-cyan);
+            font-size: 1.8rem;
+        }
+
+        .highlight {
+            color: #ffffff;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 2px 8px;
+            border-radius: 4px;
         }
 
         /* ==========================================================================
-           PANEL BUTTONS (FEATURES)
+           PANEL BUTTONS
            ========================================================================== */
         .grid-3 {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 35px;
         }
 
         .feature-card h3 {
             font-size: 1.4rem;
-            margin-bottom: 12px;
+            margin-bottom: 20px;
             color: #fff;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
+            font-weight: 700;
         }
 
         .feature-card p {
             color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        /* ==========================================================================
+           ARCHITECTURE BANNER
+           ========================================================================== */
+        .architecture-banner {
+            background: rgba(12, 18, 40, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 80px 40px;
+            text-align: center;
+            margin-top: 50px;
+            box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+        }
+
+        .tech-stack {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 50px;
+        }
+
+        .tech-pill {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
             font-size: 0.95rem;
+            color: var(--accent-cyan);
+            transition: all 0.3s;
+        }
+        
+        .tech-pill:hover {
+            background: rgba(236, 72, 153, 0.1);
+            border-color: var(--accent-secondary);
+            color: #fff;
+            box-shadow: 0 10px 20px rgba(236, 72, 153, 0.2);
+            transform: translateY(-3px);
         }
 
         /* ==========================================================================
            FOOTER & CONTACT
            ========================================================================== */
         .footer-section {
-            background: linear-gradient(to top, rgba(0, 240, 255, 0.05), transparent);
-            border-top: 1px solid var(--card-border);
-            padding: 80px 20px 40px;
+            background: linear-gradient(to top, #020308, transparent);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 120px 20px 60px;
             text-align: center;
         }
 
@@ -275,102 +428,65 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 25px;
+            gap: 20px;
             max-width: 600px;
-            margin: 0 auto 60px auto;
+            margin: 0 auto 70px auto;
         }
 
         .contact-btn {
             width: 100%;
             padding: 18px 30px;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            transition: all 0.3s;
-            border: 1px solid transparent;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .social-icon {
-            font-size: 1.5rem;
-        }
+        .social-icon { font-size: 1.5rem; }
 
-        /* Gradients for social buttons */
-        .btn-whatsapp {
-            background: linear-gradient(90deg, #25D366, #128C7E);
-            color: white;
-            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.3);
-        }
-        .btn-whatsapp:hover { transform: translateY(-3px) scale(1.02); }
+        .btn-whatsapp:hover { background: #25D366; color: #000; border-color: #25D366; box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4); }
+        .btn-discord:hover { background: #5865F2; color: #fff; border-color: #5865F2; box-shadow: 0 10px 25px rgba(88, 101, 242, 0.4); }
+        .btn-insta:hover { background: #E1306C; color: #fff; border-color: #E1306C; box-shadow: 0 10px 25px rgba(225, 48, 108, 0.4); }
+        .btn-youtube:hover { background: #FF0000; color: #fff; border-color: #FF0000; box-shadow: 0 10px 25px rgba(255, 0, 0, 0.4); }
 
-        .btn-discord {
-            background: linear-gradient(90deg, #5865F2, #4752C4);
-            color: white;
-            box-shadow: 0 5px 20px rgba(88, 101, 242, 0.3);
-        }
-        .btn-discord:hover { transform: translateY(-3px) scale(1.02); }
-
-        .btn-insta {
-            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-            color: white;
-            box-shadow: 0 5px 20px rgba(220, 39, 67, 0.3);
-        }
-        .btn-insta:hover { transform: translateY(-3px) scale(1.02); }
-
-        .btn-youtube {
-            background: linear-gradient(90deg, #FF0000, #CC0000);
-            color: white;
-            box-shadow: 0 5px 20px rgba(255, 0, 0, 0.3);
-        }
-        .btn-youtube:hover { transform: translateY(-3px) scale(1.02); }
-
-        /* Legal Links Enhanced */
-        .legal-heading {
-            color: var(--text-muted);
+        .important-notice {
+            color: var(--accent-secondary);
+            font-family: 'Montserrat', sans-serif;
             font-size: 1.1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             margin-bottom: 15px;
-            font-weight: 300;
+            text-shadow: 0 0 10px rgba(236, 72, 153, 0.3);
         }
 
-        .legal-links {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-bottom: 30px;
-        }
-
+        .legal-links { display: flex; justify-content: center; gap: 40px; margin-bottom: 40px; }
         .legal-links a {
-            color: #ffffff;
-            font-size: 1.3rem;
-            font-weight: 600;
-            transition: color 0.3s;
-            text-decoration: underline;
-            text-decoration-color: rgba(255, 255, 255, 0.2);
-            text-underline-offset: 4px;
+            color: var(--text-muted);
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        .legal-links a:hover { color: #fff; }
+        
+        .copyright { 
+            color: #64748b; 
+            font-size: 1rem; 
+            margin-top: 30px; 
+            font-family: 'Inter', sans-serif;
         }
 
-        .legal-links a:hover {
-            color: var(--accent-primary);
-            text-decoration-color: var(--accent-primary);
-        }
-
-        .copyright {
-            color: #555;
-            font-size: 0.85rem;
-            margin-top: 20px;
-        }
-
-        /* ==========================================================================
-           RESPONSIVE FIXES
-           ========================================================================== */
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             .grid-2, .team-grid { grid-template-columns: 1fr; }
-            .section-title { font-size: 2rem; }
-            .contact-btn { font-size: 1rem; padding: 15px 20px; }
-            .legal-links { flex-direction: column; gap: 15px; }
+            .main-hero-title { font-size: 3rem; }
+            .team-grid { gap: 40px; }
         }
     </style>
 </head>
@@ -380,153 +496,178 @@
 
     <div class="section-container hero-section">
         
-        <div class="phoenix-logo"></div>
-        <h1 class="section-title gradient-text">Welcome to the Phoenix HQ</h1>
+        <!-- Yahan par mp4 file use hui hai jo ekdum reliably chalegi -->
+        <video class="phoenix-logo" autoplay loop muted playsinline>
+            <source src="a_ca_ec_f_b_ca_ca_c_resultmp_.mp4" type="video/mp4">
+        </video>
+
+        <a href="https://discord.gg/DxYkat8WBB" class="hero-invite-btn" target="_blank">
+            Tap here to add to your server 🚀
+        </a>
+
+        <h1 class="main-hero-title gradient-text">Welcome to Phoenix HQ</h1>
+        <h2 class="dev-team-subtitle">Phoenix Development Team</h2>
 
         <div class="team-grid">
             <div class="team-member">
                 <div class="team-circle team1"></div>
-                <span class="team-name text-white" contenteditable="true" title="Click to edit name">primevaibhav7</span>
+                <span class="team-name">Lark</span>
             </div>
             <div class="team-member">
                 <div class="team-circle team2"></div>
-                <span class="team-name text-white" contenteditable="true" title="Click to edit name">ogjuliet</span>
+                <span class="team-name">Juliet</span>
             </div>
             <div class="team-member">
                 <div class="team-circle team3"></div>
-                <span class="team-name text-white" contenteditable="true" title="Click to edit name">aurelius_knight
-</span>
+                <span class="team-name">Kaze</span>
             </div>
         </div>
+
     </div>
 
     <div class="section-container">
-        <h2 class="section-title gradient-text">Core Infrastructure Design</h2>
+        <h2 class="section-title gradient-text">Core Infrastructure Matrix</h2>
         
         <div class="grid-2">
             <div class="glass-card">
-                <h3 class="command-title">/setup Configuration</h3>
-                <p class="command-desc">The foundational command utilized by server administrators to establish the initial framework of the Phoenix environment.</p>
+                <h3 class="command-title">⚙️ /setup Configuration</h3>
+                <p class="command-desc">The ultimate initialization protocol. Designed exclusively for Server Administrators to map the backbone of the Phoenix environment. This command writes vital configuration data directly to our MongoDB secure clusters.</p>
                 <ul class="detailed-list">
-                    <li><strong>Interface Deployment:</strong> Choose between a Dedicated Channel, Direct Voice Channel embeds, or a Hybrid control panel ecosystem.</li>
-                    <li><strong>Category Allocation:</strong> Seamlessly bind the deployment parameters to specific server categories to ensure organized hierarchy.</li>
-                    <li><strong>Matchmaking Hub Integration:</strong> Map an exact text channel where all automated global broadcast invites will be dispatched securely.</li>
+                    <li><span class="highlight">Interface Deployment Routes:</span> Select your UI environment. Generate a Dedicated Text Channel for clean aesthetics, directly embed panels into the active Voice Channel, or utilize the Hybrid ecosystem for maximum control.</li>
+                    <li><span class="highlight">Category Allocation Binding:</span> Force all dynamically spawned, zero-latency voice nodes to strictly adhere to a specific root server category, keeping your server hierarchy immaculate.</li>
+                    <li><span class="highlight">Matchmaking Integration:</span> Designate a centralized text channel. This acts as the global hub where users can algorithmically broadcast their private node invites to gather allies.</li>
                 </ul>
             </div>
 
             <div class="glass-card">
-                <h3 class="command-title">/deploy Protocol</h3>
-                <p class="command-desc">The activation matrix that converts a standard voice channel into an intelligent, multi-node Master Hub.</p>
+                <h3 class="command-title">🚀 /deploy Protocol</h3>
+                <p class="command-desc">The activation matrix. This command injects our proprietary logic into a standard voice channel, mutating it into a highly intelligent, multi-node Master Hub that listens to state updates instantly.</p>
                 <ul class="detailed-list">
-                    <li><strong>Dynamic Node Creation:</strong> Automatically spawns temporary, perfectly configured sub-channels the moment a user interacts with the Master Hub.</li>
-                    <li><strong>Custom Limit Architecture (Dynamic):</strong> Grants absolute freedom to users, providing them with a 'Set Limit' button to scale their active node dynamically.</li>
-                    <li><strong>Fixed Limit Architecture (Strict):</strong> Enforces a hard-coded user limit defined by the administrator. The 'Set Limit' interface is algorithmically stripped from user panels to ensure strict compliance.</li>
+                    <li><span class="highlight">Zero-Latency Dynamic Spawning:</span> The moment a user interacts with the Master Hub, the bot bypasses standard API delays, instantly spawning a temporary, perfectly configured sub-channel and moving the user seamlessly.</li>
+                    <li><span class="highlight">Custom Architecture (Dynamic):</span> Empowers the user. Deploys the complete UI panel, including the highly requested 'Set Limit' modal, allowing hosts to scale their crowd control dynamically.</li>
+                    <li><span class="highlight">Fixed Architecture (Strict):</span> For rigid server environments. The Administrator hard-codes a maximum user limit during deployment. The bot's algorithm automatically strips the 'Set Limit' interface from all user panels to ensure absolute compliance.</li>
                 </ul>
             </div>
         </div>
     </div>
 
     <div class="section-container">
-        <h2 class="section-title gradient-text">Operational Control Matrix</h2>
+        <div class="architecture-banner">
+            <h2 class="section-title gradient-text" style="margin-bottom: 20px;">System Intelligence & Backend</h2>
+            <p style="font-size: 1.15rem; color: #cbd5e1; max-width: 900px; margin: 0 auto; line-height: 1.8;">
+                Phoenix Core isn't just a bot; it's a living ecosystem. Powered by cutting-edge serverless logic and real-time database syncing, every action you take is processed, verified, and executed with near-zero latency. We engineer robust digital environments designed for maximum efficiency and security.
+            </p>
+            <div class="tech-stack">
+                <div class="tech-pill">MongoDB Atlas Cluster</div>
+                <div class="tech-pill">Gemini-2.5-Flash AI Matrix</div>
+                <div class="tech-pill">Zero-Latency State Engine</div>
+                <div class="tech-pill">Node.js Asynchronous Pipeline</div>
+                <div class="tech-pill">Discord API v10 Protocol</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <h2 class="section-title gradient-text">Operational Control Nodes</h2>
         
         <div class="grid-3">
             <div class="glass-card feature-card">
                 <h3>✏️ Nomenclature Shift</h3>
-                <p>Dynamically modify the designation of your secure active session. Monitored by advanced rate-limiting logic to prevent API exhaust (Restricted to 2 changes per 10-minute cycle).</p>
+                <p>Launch a secure, encrypted modal interface to dynamically rewrite your node's designation on the fly. To protect Discord's API limits, this function restricts inputs to a 30-character absolute limit and monitors changes via a rigid 10-minute cycle cooldown.</p>
             </div>
 
             <div class="glass-card feature-card">
                 <h3>👥 Capacity Scaling</h3>
-                <p>For systems operating on Custom Architectures, instantly adjust the maximum user threshold of your private node, ensuring optimal crowd control.</p>
+                <p>Instantly override the max user threshold of your private node via direct modal input. Need absolute privacy? Lower the limit. Hosting an open lounge? Set the value to '0' to instantly disengage limits and allow infinite scaling across the network.</p>
             </div>
 
             <div class="glass-card feature-card">
                 <h3>👢 Tactical Ejection</h3>
-                <p>Instantly sever the connection of any unauthorized or disruptive entity from your current operational voice node with a single execution command.</p>
+                <p>Maintain absolute authority over your communication hub. Deploy a highly responsive targeting dropdown menu populated with real-time active users. Select any unauthorized or disruptive entity and instantly sever their voice connection.</p>
             </div>
 
             <div class="glass-card feature-card">
                 <h3>📝 Telemetry Summary</h3>
-                <p>Access an ephemeral intelligence readout detailing session host data, current active population, precise node uptime, and current security lock statuses.</p>
+                <p>Execute this command to retrieve an ephemeral, highly detailed intelligence embed. It instantly calculates and displays the Host's identity, the exact population of connected entities, and reads the database timestamp to show precise, down-to-the-second node uptime.</p>
             </div>
 
             <div class="glass-card feature-card">
                 <h3>🚫 Absolute Block</h3>
-                <p>Not only eject an entity, but write their unique identifier into the session's temporary blacklist, denying any future re-entry attempts.</p>
+                <p>Beyond a simple kick, this is a severe security override. Select a target to not only disconnect them instantly but to write their unique Discord ID into the session's blacklist, dynamically rewriting the channel's ACL to explicitly deny access for that specific user.</p>
             </div>
 
             <div class="glass-card feature-card">
                 <h3>📂 Restore Clearance</h3>
-                <p>Review the active registry of blocked individuals and gracefully lift restrictions, granting them restored access to the secure node matrix.</p>
+                <p>Made a mistake or resolving a conflict? Access the active, real-time registry of blocked individuals through a secure dropdown interface. Selecting a user gracefully wipes their ID from the temporary blacklist and restores their standard connection protocols seamlessly.</p>
             </div>
 
             <div class="glass-card feature-card">
                 <h3>✅ Authorize Trust</h3>
-                <p>Elevate standard users to trusted allies. Authorized entities bypass all standard locking mechanisms, allowing seamless entry into secured channels.</p>
+                <p>Elevate up to 5 standard users simultaneously to Trusted VIP status. Trusted entities completely bypass all manual locking mechanisms. The system forces a hardcoded connection overwrite specifically for them, granting entry even during a Perimeter Lockdown.</p>
             </div>
 
             <div class="glass-card feature-card">
                 <h3>❌ Revoke Clearance</h3>
-                <p>Downgrade previously trusted entities back to standard permissions, removing their ability to bypass manual security lockdowns.</p>
+                <p>Security compromised? Open the live trust registry and select a previously whitelisted entity. This action instantly strips their bypass privileges, deletes their specialized permission overwrite, and reverts them to standard, restricted node security rules.</p>
             </div>
 
             <div class="glass-card feature-card">
                 <h3>👻 Ghost Protocol</h3>
-                <p>Manipulate the server's ViewChannel permissions dynamically. Render your entire session completely invisible to the broader server grid for ultimate privacy.</p>
+                <p>Total stealth mode. Toggling this mechanic manipulates the root visibility permissions for the default server role. Activating it instantly rips your session out of the server grid UI, rendering your operational node completely invisible to unauthorized eyes.</p>
             </div>
 
             <div class="glass-card feature-card">
                 <h3>🔒 Perimeter Lockdown</h3>
-                <p>Toggle the absolute security seal. When locked, the system physically denies connection access to all non-trusted entities attempting to join.</p>
+                <p>Toggle the absolute physical security seal. When locked, the system explicitly denies connection access to the channel across the server. Only you and your explicitly Authorized Trusted allies can penetrate the node once this rigid lockdown is engaged.</p>
             </div>
 
             <div class="glass-card feature-card">
                 <h3>🌸 Global Broadcast</h3>
-                <p>Transmit an elegant, algorithmic invitation beacon directly to the designated matchmaking hub. Protected by a stringent 10-minute cooldown module to prevent spam.</p>
+                <p>Algorithmically generate a secure, single-use bypass invite link (programmed with a strict Max Age of 300 seconds) and transmit it directly into a beautifully formatted embed within the server's designated Matchmaking Hub. Protected by a stringent anti-spam cooldown.</p>
             </div>
 
             <div class="glass-card feature-card">
                 <h3>🎁 Authority Transfer</h3>
-                <p>Instantly and securely pass the Master Control hierarchy of your active session to another connected entity via a highly responsive dropdown matrix.</p>
+                <p>Need to step away without collapsing the node? Execute a permanent Host transfer. Select any active entity currently sitting in your node to surrender Master Control. The database instantly rewrites the owner tag, passing the entire UI Control Panel safely.</p>
             </div>
 
             <div class="glass-card feature-card">
                 <h3>💬 AI Sync Matrix</h3>
-                <p>Activate the embedded Gemini Intelligence sub-system. Once engaged, mentioning the bot within the channel spawns highly sophisticated, context-aware AI interactions.</p>
+                <p>Awaken the machine. This command toggles the embedded Google Gemini-2.5-Flash AI subsystem. Once engaged, simply mention the bot within your text channel to spawn context-aware, hyper-intelligent, conversational text assistance built directly into your interface.</p>
             </div>
 
             <div class="glass-card feature-card">
                 <h3>🗑️ Session Purge</h3>
-                <p>Initiate a total structural wipe. Protected by an interactive 'yes' confirmation collector to prevent accidental erasure of the operational node and its data.</p>
+                <p>Initiate a total structural wipe. Because this command permanently deletes the node and wipes its data from the MongoDB registry, it is protected by a stringent 15-second bot mention verification system to completely eliminate the risk of accidental deletion by the host.</p>
             </div>
         </div>
     </div>
 
     <footer class="footer-section">
-        <h2 class="section-title gradient-text">Direct Developer Contact</h2>
+        <h2 class="section-title gradient-text" style="margin-bottom: 40px;">Direct Developer Contact</h2>
         
         <div class="contact-grid">
-            <a href="https://wa.me/+60 1123639318" target="_blank" class="contact-btn btn-whatsapp">
-                <span class="social-icon">💬</span> Contact on WhatsApp for detailed informations
+            <a href="https://wa.me/601123639318" target="_blank" class="contact-btn btn-whatsapp">
+                <span class="social-icon">💬</span> Reach out on WhatsApp
             </a>
             <a href="https://discord.gg/DxYkat8WBB" target="_blank" class="contact-btn btn-discord">
-                <span class="social-icon">🛡️</span> Directly contact on Discord for guiding about bot
+                <span class="social-icon">🛡️</span> Join our Discord Hub
             </a>
             <a href="https://www.instagram.com/primevaibhav7?igsh=NGQ3bG5uZmJpbTc0" target="_blank" class="contact-btn btn-insta">
-                <span class="social-icon">📸</span> Follow on Instagram for more bot informations
+                <span class="social-icon">📸</span> Follow on Instagram
             </a>
-            <a href="https://youtube.com/@primevaibhav7?si=6wMIiaICqG7DS27w" target="_blank" class="contact-btn btn-youtube">
-                <span class="social-icon">▶️</span> Subscribe on YouTube for more that type of tutorials
+            <a href="https://youtube.com/@primevaibhav7?si=FIxAimkgXKx9yOtO" target="_blank" class="contact-btn btn-youtube">
+                <span class="social-icon">▶️</span> Subscribe on YouTube
             </a>
         </div>
 
-        <p class="legal-heading">For detailed operational guidelines and data handling policies:</p>
+        <p class="important-notice">Important</p>
         <div class="legal-links">
-            <a href="https://phoenixbot4.github.io/ptos.github.io/" target="_blank">Terms of Operations</a>
-            <a href="https://phoenixbot4.github.io/ppp.github.io/" target="_blank">Privacy Policy</a>
+            <a href="https://phoenixbot4.github.io/ptos.github.io/" target="_blank">Terms of Protocol</a>
+            <a href="https://phoenixbot4.github.io/ppp.github.io/" target="_blank">Privacy Matrix</a>
         </div>
         
-        <p class="copyright">© 2026 Phoenix Core Framework. All architectural parameters and structural designs are digitally registered and enforced.</p>
+        <p class="copyright">© 2026 all rights reserved prime Vaibhav 7</p>
     </footer>
 
     <script>
@@ -534,9 +675,8 @@
         const ctx = canvas.getContext('2d');
 
         let width, height;
-        let bubbles = [];
+        let particles = [];
 
-        // Resize Canvas to fit screen
         function resize() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
@@ -545,94 +685,66 @@
         window.addEventListener('resize', resize);
         resize();
 
-        // Bubble Class Definition
-        class Bubble {
+        class CyberParticle {
             constructor() {
                 this.x = Math.random() * width;
-                this.y = Math.random() * -height; // Start above screen
-                this.radius = Math.random() * 25 + 5; // Size between 5 and 30
-                this.speedY = Math.random() * 1.5 + 0.5; // Falling speed
-                this.speedX = (Math.random() - 0.5) * 0.5; // Slight horizontal drift
-                // Randomly pick between cyan, pink, or white for bubble tint
-                const colors = ['0, 240, 255', '255, 0, 85', '255, 255, 255'];
+                this.y = Math.random() * -height; 
+                this.size = Math.random() * 2.5 + 0.5; 
+                this.speedY = Math.random() * 1.2 + 0.1; 
+                this.speedX = (Math.random() - 0.5) * 0.5; 
+                
+                const colors = ['59, 130, 246', '236, 72, 153', '0, 240, 255'];
                 this.color = colors[Math.floor(Math.random() * colors.length)];
-                this.opacity = Math.random() * 0.4 + 0.1; // Glassy transparency
+                this.opacity = Math.random() * 0.5 + 0.1; 
             }
 
             update() {
                 this.y += this.speedY;
-                this.x += this.speedX;
+                this.x += Math.sin(this.y * 0.005) + this.speedX; 
 
-                // When bubble hits the very bottom, it slows down and fades out (popping effect)
-                if (this.y > height - this.radius) {
-                    this.speedY *= 0.8; // Slow down
-                    this.opacity -= 0.01; // Fade out rapidly
-                }
-
-                // If completely faded, reset to top
-                if (this.opacity <= 0) {
+                if (this.y > height) {
                     this.reset();
                 }
             }
 
             reset() {
                 this.x = Math.random() * width;
-                this.y = Math.random() * -100;
-                this.radius = Math.random() * 25 + 5;
-                this.speedY = Math.random() * 1.5 + 0.5;
-                this.speedX = (Math.random() - 0.5) * 0.5;
-                this.opacity = Math.random() * 0.4 + 0.1;
+                this.y = Math.random() * -50;
+                this.speedY = Math.random() * 1.2 + 0.1;
             }
 
             draw() {
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                // Glassy gradient effect inside the bubble
-                let gradient = ctx.createRadialGradient(
-                    this.x - this.radius * 0.3, 
-                    this.y - this.radius * 0.3, 
-                    this.radius * 0.1, 
-                    this.x, 
-                    this.y, 
-                    this.radius
-                );
-                gradient.addColorStop(0, `rgba(255, 255, 255, ${this.opacity + 0.3})`);
-                gradient.addColorStop(1, `rgba(${this.color}, ${this.opacity})`);
-                
-                ctx.fillStyle = gradient;
-                // Subtle border to define the glass shape
-                ctx.strokeStyle = `rgba(255, 255, 255, ${this.opacity + 0.2})`;
-                ctx.lineWidth = 1;
-                
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${this.color}, ${this.opacity})`;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = `rgba(${this.color}, 0.5)`;
                 ctx.fill();
-                ctx.stroke();
                 ctx.closePath();
+                ctx.shadowBlur = 0; 
             }
         }
 
-        // Initialize Bubbles
-        function initBubbles() {
-            bubbles = [];
-            let bubbleCount = window.innerWidth < 768 ? 40 : 80; // Less bubbles on mobile for performance
-            for (let i = 0; i < bubbleCount; i++) {
-                bubbles.push(new Bubble());
+        function initParticles() {
+            particles = [];
+            let count = window.innerWidth < 768 ? 40 : 80; 
+            for (let i = 0; i < count; i++) {
+                particles.push(new CyberParticle());
             }
         }
 
-        // Animation Loop
         function animate() {
             ctx.clearRect(0, 0, width, height);
             
-            bubbles.forEach(bubble => {
-                bubble.update();
-                bubble.draw();
+            particles.forEach(p => {
+                p.update();
+                p.draw();
             });
 
             requestAnimationFrame(animate);
         }
 
-        // Start
-        initBubbles();
+        initParticles();
         animate();
     </script>
 </body>
